@@ -24,7 +24,11 @@ function getNumbersFromString (string) {
   let stringCopy = string;
   let stringNumber = '';
 
-  if (!Number.isNaN(stringCopy)) {
+  if (Number.isInteger(stringCopy)) {
+    return stringCopy >= 0 ? stringCopy : stringCopy * -1;
+  }
+
+  if (typeof stringCopy !== 'string') {
     stringCopy = stringCopy.toString();
   }
 
