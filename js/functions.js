@@ -25,7 +25,7 @@ function getNumbersFromString (string) {
   let stringNumber = '';
 
   if (Number.isInteger(stringCopy)) {
-    return stringCopy >= 0 ? stringCopy : stringCopy * -1;
+    return Math.abs(stringCopy);
   }
 
   if (typeof stringCopy !== 'string') {
