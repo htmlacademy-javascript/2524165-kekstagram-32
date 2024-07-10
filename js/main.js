@@ -102,5 +102,3 @@ const generatePhoto = () => ({
 });
 
 const randomPhotos = Array.from({length: NUMBER_OF_PHOTOS}, generatePhoto);
-
-randomPhotos();
