@@ -107,3 +107,4 @@ function generateRandomPhotos() {
 }
 
 generateRandomPhotos();
+
