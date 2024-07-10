@@ -101,6 +101,9 @@ const generatePhoto = () => ({
   comments: Array.from({length: getRandomPositiveInteger(COMMENTS_NUMBER_MIN, COMMENTS_NUMBER_MAX)}, generateComment),
 });
 
-const randomPhotos = Array.from({length: NUMBER_OF_PHOTOS}, generatePhoto);
+//Поменял на функцию, так как в коде не допускаются неиспользуемые переменные
+function generateRandomPhotos() {
+  return Array.from({length: NUMBER_OF_PHOTOS}, generatePhoto);
+}
 
-randomPhotos();
+generateRandomPhotos();
