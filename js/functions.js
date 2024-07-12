@@ -59,16 +59,7 @@ function checkTimeLimit(workStart, workEnd, meetingStart, meetingDuration) {
   const meetingStartInMinutes = meetingStart.split(':').map((element) => parseInt(element, 10)).reduce((currentValue, element) => currentValue * 60 + element);
   const meetingEndInMinutes = meetingStartInMinutes + meetingDuration;
 
-  //Рабочий день начинается после начала встречи, или рабочий день начинается после окончания встречи
-  if (workStartInMinutes > meetingStartInMinutes || workStartInMinutes > meetingEndInMinutes) {
-    return false;
-  }
-  //Рабочий день заканчивается до начала встречи, или рабочий день заканчивается до окончания встречи
-  if (workEndInMinutes < meetingStartInMinutes || workEndInMinutes < meetingEndInMinutes) {
-    return false;
-  }
-
-  return true;
+  return workStartInMinutes <= meetingStartInMinutes && workEndInMinutes >= meetingEndInMinutes;
 }
 
 checkTimeLimit('08:00', '17:30', '14:00', 90);
