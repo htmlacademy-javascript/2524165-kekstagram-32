@@ -53,3 +53,17 @@ getNumbersFromString('2023 год');
 // console.log(getNumbersFromString(1.5));
 
 
+function checkTimeLimit(workStart, workEnd, meetingStart, meetingDuration) {
+  const workStartInMinutes = workStart.split(':').map((element) => parseInt(element, 10)).reduce((currentValue, element) => currentValue * 60 + element);
+  const workEndInMinutes = workEnd.split(':').map((element) => parseInt(element, 10)).reduce((currentValue, element) => currentValue * 60 + element);
+  const meetingStartInMinutes = meetingStart.split(':').map((element) => parseInt(element, 10)).reduce((currentValue, element) => currentValue * 60 + element);
+  const meetingEndInMinutes = meetingStartInMinutes + meetingDuration;
+
+  return workStartInMinutes <= meetingStartInMinutes && workEndInMinutes >= meetingEndInMinutes;
+}
+
+checkTimeLimit('08:00', '17:30', '14:00', 90);
+// console.log(checkTimeLimit('8:0', '10:0', '8:0', 120));
+// console.log(checkTimeLimit('08:00', '14:30', '14:00', 90));
+// console.log(checkTimeLimit('14:00', '17:30', '08:0', 90));
+// console.log(checkTimeLimit('8:00', '17:30', '08:00', 900));
