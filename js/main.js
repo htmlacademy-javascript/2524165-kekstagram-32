@@ -1,1 +1,4 @@
-import './miniatures-draw.js';
+import {generateRandomPhotos} from './data';
+import { drawMiniatures } from './miniatures-draw.js';
+
+drawMiniatures(generateRandomPhotos());

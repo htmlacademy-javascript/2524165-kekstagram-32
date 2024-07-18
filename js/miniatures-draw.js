@@ -1,21 +1,21 @@
-import {generateRandomPhotos} from './data';
+function drawMiniatures (photos) {
+  const pictures = document.querySelector('.pictures');
+  const template = document.querySelector('#picture').content.querySelector('.picture');
+  const photosFragment = document.createDocumentFragment();
 
-const pictures = document.querySelector('.pictures');
-const template = document.querySelector('#picture').content.querySelector('.picture');
-const photosFragment = document.createDocumentFragment();
+  photos.forEach(({url, description, likes, comments}) => {
+    const photo = template.cloneNode(true);
+    const photoImg = photo.querySelector('.picture__img');
+    const photoInfo = photo.querySelector('.picture__info');
+    photoImg.src = url;
+    photoImg.alt = description;
+    photoInfo.querySelector('.picture__likes').textContent = likes;
+    photoInfo.querySelector('.picture__comments').textContent = comments.length;
 
-const photos = generateRandomPhotos();
+    photosFragment.append(photo);
+  });
 
-photos.forEach(({url, description, likes, comments}) => {
-  const photo = template.cloneNode(true);
-  const photoImg = photo.querySelector('.picture__img');
-  const photoInfo = photo.querySelector('.picture__info');
-  photoImg.src = url;
-  photoImg.alt = description;
-  photoInfo.querySelector('.picture__likes').textContent = likes;
-  photoInfo.querySelector('.picture__comments').textContent = comments.length;
+  pictures.append(photosFragment);
+}
 
-  photosFragment.append(photo);
-});
-
-pictures.append(photosFragment);
+export {drawMiniatures};
