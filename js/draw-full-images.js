@@ -1,26 +1,14 @@
-/* Окно должно открываться при клике на миниатюру.
-Данные для окна (изображение, комментарии, лайки и так далее)
-берите из того же объекта, который использовался для отрисовки
-соответствующей миниатюры.
-
-После открытия окна добавьте тегу <body> класс modal-open,
-чтобы контейнер с фотографиями позади не прокручивался при скролле.
-При закрытии окна не забудьте удалить этот класс.
-
-Напишите код для закрытия окна по нажатию клавиши Esc и клике по иконке закрытия.
-
-Подключите модуль в проект.
-*/
-
 import { generatedPhotos } from './main';
+
+const BUTTON_CLOSE_MODULE_WINDOW = 'Escape';
 
 const picturesContainer = document.querySelector('.pictures');
 const bigPictureElement = document.querySelector('.big-picture');
 
-//Удаляет два комментария в исходной разметке
-deleteBigPictureComments();
+picturesContainer.addEventListener('click', openBigPicture);
+bigPictureElement.querySelector('.cancel').addEventListener('click', closeBigPicture);
 
-picturesContainer.addEventListener('click', (evt) => {
+function openBigPicture (evt) {
   if (evt.target.matches('img')) {
     const photoIndex = Array.from(picturesContainer.querySelectorAll('.picture img')).indexOf(evt.target);
     const photoData = generatedPhotos[photoIndex];
@@ -45,7 +33,7 @@ picturesContainer.addEventListener('click', (evt) => {
     document.addEventListener('keydown', onDocumentKeydown);
   }
 
-});
+}
 
 function loadComments (comments) {
   const commentsSection = bigPictureElement.querySelector('.social__comments');
@@ -76,19 +64,12 @@ function closeBigPicture () {
 
 function deleteBigPictureComments () {
   const comments = bigPictureElement.querySelector('.social__comments');
-  const commentsChildren = comments.children;
-  for (let i = commentsChildren.length - 1; i >= 0; i--) {
-    comments.removeChild(commentsChildren[i]);
-  }
-
+  comments.replaceChildren();
 }
 
 function onDocumentKeydown (evt) {
-  if (evt.key === 'Escape') {
+  if (evt.key === BUTTON_CLOSE_MODULE_WINDOW) {
     evt.preventDefault();
     closeBigPicture();
   }
 }
-
-bigPictureElement.querySelector('.cancel').addEventListener('click', closeBigPicture);
-
