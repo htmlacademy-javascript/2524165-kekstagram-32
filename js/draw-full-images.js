@@ -7,13 +7,13 @@ const picturesContainer = document.querySelector('.pictures');
 const bigPictureElement = document.querySelector('.big-picture');
 const buttonCommentsLoader = bigPictureElement.querySelector('.comments-loader');
 
-picturesContainer.addEventListener('click', openBigPicture);
-bigPictureElement.querySelector('.cancel').addEventListener('click', closeBigPicture);
-buttonCommentsLoader.addEventListener('click', showMoreComments);
+picturesContainer.addEventListener('click', onMiniatureClick);
+bigPictureElement.querySelector('.cancel').addEventListener('click', onCloseButtonClick);
+buttonCommentsLoader.addEventListener('click', onCommentsLoaderButtonClick);
 
 let selectedBigPictureData;
 
-function openBigPicture (evt) {
+function onMiniatureClick (evt) {
   if (evt.target.matches('img')) {
     const photoIndex = Array.from(picturesContainer.querySelectorAll('.picture img')).indexOf(evt.target);
     const photoData = generatedPhotos[photoIndex];
@@ -75,25 +75,25 @@ function loadComments (comments) {
 
 }
 
-function closeBigPicture () {
+function deleteBigPictureComments () {
+  const comments = bigPictureElement.querySelector('.social__comments');
+  comments.replaceChildren();
+}
+
+function onCloseButtonClick () {
   deleteBigPictureComments();
   bigPictureElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-function deleteBigPictureComments () {
-  const comments = bigPictureElement.querySelector('.social__comments');
-  comments.replaceChildren();
-}
-
-function showMoreComments () {
+function onCommentsLoaderButtonClick () {
   loadComments(selectedBigPictureData.comments);
 }
 
 function onDocumentKeydown (evt) {
   if (evt.key === BUTTON_CLOSE_MODULE_WINDOW) {
     evt.preventDefault();
-    closeBigPicture();
+    onCloseButtonClick();
   }
 }
