@@ -1,4 +1,4 @@
-import { BUTTON_CLOSE_MODULE_WINDOW } from './constants.js';
+import { BUTTON_CLOSE_MODULE_WINDOW, IMAGE_DESCRIPTION_MAX_LENGTH } from './constants.js';
 
 const imgUploadElement = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadElement.querySelector('.img-upload__form');
@@ -37,7 +37,7 @@ function validateHashTags () {
 }
 
 function validateDescription () {
-  return imgDescriptionInput.value.length <= 140;
+  return imgDescriptionInput.value.length <= IMAGE_DESCRIPTION_MAX_LENGTH;
 }
 
 function getHashTagsError () {
@@ -62,31 +62,35 @@ imgUploadForm.addEventListener('submit', (evt) => {
   pristine.validate();
 });
 
-imgUploadInput.addEventListener('change', onImgUploadValueChange);
+imgUploadInput.addEventListener('change', onImgUploadInputChange);
 imgHashTagsInput.addEventListener('focus', onImgHashTagsInputFocus);
 imgHashTagsInput.addEventListener('blur', onImgHashTagsInputBlur);
 imgDescriptionInput.addEventListener('focus', onImgDescriptionInputFocus);
 imgDescriptionInput.addEventListener('blur', onImgDescriptionInputBlur);
 
-function onImgUploadValueChange () {
-  imgUploadOverlayCloseButton.addEventListener('click', onCloseModalWindow);
+function onImgUploadInputChange () {
+  imgUploadOverlayCloseButton.addEventListener('click', onImgUploadOverlayCloseButtonClick);
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.body.addEventListener('keydown', onDocumentKeydown);
 }
 
-function onCloseModalWindow () {
+function closeModal () {
   imgUploadInput.value = '';
   imgUploadOverlay.classList.add('hidden');
-  imgUploadOverlayCloseButton.removeEventListener('click', onCloseModalWindow);
+  imgUploadOverlayCloseButton.removeEventListener('click', onImgUploadOverlayCloseButtonClick);
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+}
+
+function onImgUploadOverlayCloseButtonClick () {
+  closeModal();
 }
 
 function onDocumentKeydown (evt) {
   if (evt.key === BUTTON_CLOSE_MODULE_WINDOW) {
     evt.preventDefault();
-    onCloseModalWindow();
+    closeModal();
   }
 }
 
