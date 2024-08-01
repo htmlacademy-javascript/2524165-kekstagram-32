@@ -17,7 +17,7 @@ function onMiniatureClick (evt) {
     const photoData = generatedPhotos[photoIndex];
     bigPictureElement.dataset.id = photoData.id;
 
-    bigPictureButtonClose.addEventListener('click', onCloseButtonClick);
+    bigPictureButtonClose.addEventListener('click', onBigPictureCloseButtonClick);
     bigPictureButtonCommentsLoader.addEventListener('click', onCommentsLoaderButtonClick);
 
     bigPictureElement.classList.remove('hidden');
@@ -82,22 +82,26 @@ function deleteBigPictureComments () {
   comments.replaceChildren();
 }
 
-function onCloseButtonClick () {
+function onCommentsLoaderButtonClick () {
+  drawComments(loadComments(bigPictureElement.dataset.id));
+}
+
+function closeModal () {
   deleteBigPictureComments();
   bigPictureElement.classList.add('hidden');
-  bigPictureButtonClose.removeEventListener('click', onCloseButtonClick);
+  bigPictureButtonClose.removeEventListener('click', onBigPictureCloseButtonClick);
   bigPictureButtonCommentsLoader.removeEventListener('click', onCommentsLoaderButtonClick);
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-function onCommentsLoaderButtonClick () {
-  drawComments(loadComments(bigPictureElement.dataset.id));
+function onBigPictureCloseButtonClick () {
+  closeModal();
 }
 
 function onDocumentKeydown (evt) {
   if (evt.key === BUTTON_CLOSE_MODULE_WINDOW) {
     evt.preventDefault();
-    onCloseButtonClick();
+    closeModal();
   }
 }
