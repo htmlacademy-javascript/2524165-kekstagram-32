@@ -1,54 +1,54 @@
-const defaultEffect = 'none';
-const effectsStyles = {
-  chrome: {
+const defaultEffect = 'NONE';
+const EffectsStyles = {
+  CHROME: {
     style: 'grayscale',
     unit: '',
   },
-  sepia: {
+  SEPIA: {
     style: 'sepia',
     unit: '',
   },
-  marvin: {
+  MARVIN: {
     style: 'invert',
     unit: '%',
   },
-  phobos: {
+  PHOBOS: {
     style: 'blur',
     unit: 'px',
   },
-  heat: {
+  HEAT: {
     style: 'brightness',
     unit: '',
   },
 };
 
-const effectsSliderOptions = {
-  none: {
+const EffectsSliderOptions = {
+  NONE: {
     min: 1,
     max: 3,
     step: 0.1,
   },
-  chrome: {
+  CHROME: {
     min: 0,
     max: 1,
     step: 0.1,
   },
-  sepia: {
+  SEPIA: {
     min: 0,
     max: 1,
     step: 0.1,
   },
-  marvin: {
+  MARVIN: {
     min: 0,
     max: 100,
     step: 1,
   },
-  phobos: {
+  PHOBOS: {
     min: 0,
     max: 3,
     step: 0.1,
   },
-  heat: {
+  HEAT: {
     min: 1,
     max: 3,
     step: 0.1,
@@ -64,14 +64,14 @@ const effectsList = document.querySelector('.effects');
 let currentEffect = defaultEffect;
 
 function createSlider (effect) {
-  const {min, max, step} = effectsSliderOptions[effect];
+  const {min, max, step} = EffectsSliderOptions[effect];
   noUiSlider.create(slider, {
     range: {
-      min: min,
-      max: max,
+      min,
+      max,
     },
     start: max,
-    step: step,
+    step,
     connect: 'lower',
     format: {
       to: function (value) {
@@ -97,14 +97,14 @@ function setEffect (effect) {
 }
 
 function setSliderOptions () {
-  const {min, max, step} = effectsSliderOptions[currentEffect];
+  const {min, max, step} = EffectsSliderOptions[currentEffect];
   slider.noUiSlider.updateOptions({
     range: {
-      min: min,
-      max: max,
+      min,
+      max,
     },
     start: max,
-    step: step,
+    step,
   });
 }
 
@@ -112,8 +112,8 @@ function setImageStyle (effectValue) {
   if (currentEffect === defaultEffect) {
     imgUploadPreview.style.filter = null;
   } else {
-    const style = effectsStyles[currentEffect].style;
-    const unit = effectsStyles[currentEffect].unit;
+    const style = EffectsStyles[currentEffect].style;
+    const unit = EffectsStyles[currentEffect].unit;
     imgUploadPreview.style.filter = `${style}(${effectValue}${unit})`;
   }
 }
@@ -125,7 +125,8 @@ function onSliderUpdate () {
 }
 
 function onEffectsListElementChange (evt) {
-  setEffect(evt.target.value);
+  const effect = evt.target.value.toUpperCase();
+  setEffect(effect);
 }
 
 function showSlider () {
