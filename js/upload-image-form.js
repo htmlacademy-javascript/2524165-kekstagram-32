@@ -1,4 +1,6 @@
 import { BUTTON_CLOSE_MODULE_WINDOW, IMAGE_DESCRIPTION_MAX_LENGTH } from './constants.js';
+import { resetScale } from './upload-image-scale.js';
+import { initEffect, resetEffect } from './upload-image-effects.js';
 
 const imgUploadElement = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadElement.querySelector('.img-upload__form');
@@ -9,6 +11,8 @@ const imgHashTagsInput = imgUploadElement.querySelector('.text__hashtags');
 const imgDescriptionInput = imgUploadElement.querySelector('.text__description');
 
 const regExpPattern = /^#[a-zа-яё0-9]{1,19}$/i;
+
+initEffect();
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -81,6 +85,8 @@ function closeModal () {
   imgUploadOverlayCloseButton.removeEventListener('click', onImgUploadOverlayCloseButtonClick);
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  resetScale();
+  resetEffect();
 }
 
 function onImgUploadOverlayCloseButtonClick () {
