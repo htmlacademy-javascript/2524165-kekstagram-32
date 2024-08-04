@@ -1,10 +1,10 @@
-import { generateRandomPhotos } from './data.js';
 import { drawMiniatures } from './draw-miniatures.js';
-import './draw-full-images.js';
+import { getData } from './api.js';
+import { getPhotos } from './draw-full-images.js';
 import './upload-image-form.js';
 
-const generatedPhotos = generateRandomPhotos();
+getData().then((photos) => {
+  drawMiniatures(photos);
+  getPhotos(photos);
+});
 
-drawMiniatures(generatedPhotos);
-
-export { generatedPhotos };
