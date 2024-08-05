@@ -1,7 +1,8 @@
 import { BUTTON_CLOSE_MODULE_WINDOW, IMAGE_DESCRIPTION_MAX_LENGTH } from './constants.js';
 import { resetScale } from './upload-image-scale.js';
 import { initEffect, resetEffect } from './upload-image-effects.js';
-import { sendData, showSendDataSuccessMessage} from './api.js';
+import { sendData } from './api.js';
+import { showSendDataErrorMessage, showSendDataSuccessMessage } from './util.js';
 
 const imgUploadElement = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadElement.querySelector('.img-upload__form');
@@ -82,6 +83,7 @@ function onImgUploadFormSubmit (evt) {
         showSendDataSuccessMessage();
         closeModal();
       })
+      .catch(() => showSendDataErrorMessage())
       .finally(() => unblockSubmitButton());
   }
 }
@@ -144,3 +146,5 @@ function onImgDescriptionInputBlur () {
 function onInputKeydown (evt) {
   evt.stopPropagation();
 }
+
+
