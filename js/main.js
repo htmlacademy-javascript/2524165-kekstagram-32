@@ -1,10 +1,13 @@
-import { generateRandomPhotos } from './data.js';
 import { drawMiniatures } from './draw-miniatures.js';
-import './draw-full-images.js';
+import { getData } from './api.js';
+import { showGetDataErrorMessage } from './system-modal-messages.js';
+import { getPhotos } from './draw-full-images.js';
 import './upload-image-form.js';
 
-const generatedPhotos = generateRandomPhotos();
+getData()
+  .then((photos) => {
+    drawMiniatures(photos);
+    getPhotos(photos);
+  })
+  .catch(() => showGetDataErrorMessage());
 
-drawMiniatures(generatedPhotos);
-
-export { generatedPhotos };

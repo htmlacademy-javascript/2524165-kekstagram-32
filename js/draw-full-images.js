@@ -1,4 +1,3 @@
-import { generatedPhotos } from './main.js';
 import { BUTTON_CLOSE_MODULE_WINDOW } from './constants.js';
 
 const NUMBER_OF_COMMENTS = 5;
@@ -11,10 +10,15 @@ const bigPictureButtonCommentsLoader = bigPictureElement.querySelector('.comment
 
 picturesContainer.addEventListener('click', onMiniatureClick);
 
+let loadedPhotos;
+function getPhotos (photos) {
+  loadedPhotos = photos;
+}
+
 function onMiniatureClick (evt) {
   if (evt.target.matches('img')) {
     const photoIndex = Array.from(picturesContainer.querySelectorAll('.picture img')).indexOf(evt.target);
-    const photoData = generatedPhotos[photoIndex];
+    const photoData = loadedPhotos[photoIndex];
     bigPictureElement.dataset.id = photoData.id;
 
     bigPictureButtonClose.addEventListener('click', onBigPictureCloseButtonClick);
@@ -39,7 +43,7 @@ function onMiniatureClick (evt) {
 }
 
 function loadComments (id) {
-  const loadedComments = generatedPhotos[id - 1].comments;
+  const loadedComments = loadedPhotos[id].comments;
   return loadedComments;
 }
 
@@ -105,3 +109,5 @@ function onDocumentKeydown (evt) {
     closeModal();
   }
 }
+
+export { getPhotos };

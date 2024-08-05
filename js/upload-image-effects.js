@@ -145,6 +145,7 @@ function initEffect () {
 }
 
 function resetEffect () {
+  effectsList.querySelector('input[type="radio"]:first-child').checked = true;
   setEffect(defaultEffect);
 }
 

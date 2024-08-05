@@ -17,4 +17,4 @@ function generateNewID() {
   };
 }
 
-export {getRandomArrayElement, getRandomPositiveInteger, generateNewID};
+export { getRandomArrayElement, generateNewID };
