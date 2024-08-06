@@ -1,3 +1,5 @@
+import { DEBOUNCE_DEFAULT_DELAY_TIME } from './constants';
+
 function getRandomPositiveInteger(min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -17,4 +19,12 @@ function generateNewID() {
   };
 }
 
-export { getRandomArrayElement, generateNewID };
+function debounce (callback, timeoutDelay = DEBOUNCE_DEFAULT_DELAY_TIME) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { getRandomArrayElement, generateNewID, debounce };

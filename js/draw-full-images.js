@@ -11,7 +11,7 @@ const bigPictureButtonCommentsLoader = bigPictureElement.querySelector('.comment
 picturesContainer.addEventListener('click', onMiniatureClick);
 
 let loadedPhotos;
-function getPhotos (photos) {
+function getPhotosForFullImages (photos) {
   loadedPhotos = photos;
 }
 
@@ -110,4 +110,4 @@ function onDocumentKeydown (evt) {
   }
 }
 
-export { getPhotos };
+export { getPhotosForFullImages };
