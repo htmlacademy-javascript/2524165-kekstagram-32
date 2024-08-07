@@ -1,4 +1,5 @@
 function drawMiniatures (photos) {
+  removeMiniatures();
   const pictures = document.querySelector('.pictures');
   const template = document.querySelector('#picture').content.querySelector('.picture');
   const photosFragment = document.createDocumentFragment();
@@ -18,4 +19,9 @@ function drawMiniatures (photos) {
   pictures.append(photosFragment);
 }
 
-export {drawMiniatures};
+function removeMiniatures () {
+  const miniatures = document.querySelectorAll('.picture');
+  miniatures.forEach((miniature) => miniature.remove());
+}
+
+export { drawMiniatures, removeMiniatures };
