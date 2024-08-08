@@ -4,9 +4,12 @@ import { initEffect, resetEffect } from './upload-image-effects.js';
 import { sendData } from './api.js';
 import { showSendDataErrorMessage, showSendDataSuccessMessage } from './system-modal-messages.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const imgUploadElement = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadElement.querySelector('.img-upload__form');
 const imgUploadOverlay = imgUploadElement.querySelector('.img-upload__overlay');
+const imgUploadPreview = imgUploadElement.querySelector('.img-upload__preview img');
 const imgUploadOverlayCloseButton = imgUploadOverlay.querySelector('.img-upload__cancel');
 const imgUploadInput = imgUploadElement.querySelector('.img-upload__input');
 const imgUploadSubmitButton = imgUploadElement.querySelector('.img-upload__submit');
@@ -96,10 +99,21 @@ imgDescriptionInput.addEventListener('focus', onImgDescriptionInputFocus);
 imgDescriptionInput.addEventListener('blur', onImgDescriptionInputBlur);
 
 function onImgUploadInputChange () {
+  updatePreviewPhoto();
   imgUploadOverlayCloseButton.addEventListener('click', onImgUploadOverlayCloseButtonClick);
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+}
+
+function updatePreviewPhoto () {
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
+  if (matches) {
+    imgUploadPreview.src = URL.createObjectURL(file);
+  }
 }
 
 function closeModal () {
