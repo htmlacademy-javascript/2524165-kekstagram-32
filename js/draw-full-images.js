@@ -7,6 +7,7 @@ const bigPictureElement = document.querySelector('.big-picture');
 const bigPictureCommentsSection = bigPictureElement.querySelector('.social__comments');
 const bigPictureButtonClose = bigPictureElement.querySelector('.cancel');
 const bigPictureButtonCommentsLoader = bigPictureElement.querySelector('.comments-loader');
+const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
 picturesContainer.addEventListener('click', onMiniatureClick);
 
@@ -16,7 +17,9 @@ function getPhotosForFullImages (photos) {
 }
 
 function onMiniatureClick (evt) {
-  if (evt.target.matches('img')) {
+  const isImgUploadOverlayHidden = checkImgUploadOverlayVisibility();
+
+  if (evt.target.matches('img') && isImgUploadOverlayHidden) {
     const photoIndex = Array.from(picturesContainer.querySelectorAll('.picture img')).indexOf(evt.target);
     const photoData = loadedPhotos[photoIndex];
     bigPictureElement.dataset.id = photoData.id;
@@ -108,6 +111,10 @@ function onDocumentKeydown (evt) {
     evt.preventDefault();
     closeModal();
   }
+}
+
+function checkImgUploadOverlayVisibility () {
+  return imgUploadOverlay.classList.contains('hidden');
 }
 
 export { getPhotosForFullImages };

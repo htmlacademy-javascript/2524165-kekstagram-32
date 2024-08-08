@@ -18,17 +18,23 @@ filterDiscussedButton.addEventListener('click', onfilterDiscussedButtonClick);
 
 function onFilterDefaultButtonClick () {
   setFilterButtonActive(filterDefaultButton);
-  filterImages('filterDefault');
+  if (loadedPhotos) {
+    filterImages('filterDefault');
+  }
 }
 
 function onfilterRandomButtonClick () {
   setFilterButtonActive(filterRandomButton);
-  filterImages('filterRandom');
+  if (loadedPhotos) {
+    filterImages('filterRandom');
+  }
 }
 
 function onfilterDiscussedButtonClick () {
   setFilterButtonActive(filterDiscussedButton);
-  filterImages('filterDiscussed');
+  if (loadedPhotos) {
+    filterImages('filterDiscussed');
+  }
 }
 
 function filterImages (filterName) {
@@ -65,11 +71,11 @@ function filterImagesRandom (photos) {
 }
 
 function filterImagesDiscussed (photos) {
-  return photos.sort(comparePhotosLikes);
+  return photos.sort(comparePhotosComments);
 }
 
-function comparePhotosLikes (photoA, photoB) {
-  return photoB.likes - photoA.likes;
+function comparePhotosComments (photoA, photoB) {
+  return photoB.comments.length - photoA.comments.length;
 }
 
 function setFilterButtonActive (filterButton) {
@@ -84,3 +90,4 @@ function showImageFilters () {
 }
 
 export { showImageFilters, getPhotosForFilter };
+
