@@ -15,6 +15,7 @@ const imgUploadInput = imgUploadElement.querySelector('.img-upload__input');
 const imgUploadSubmitButton = imgUploadElement.querySelector('.img-upload__submit');
 const imgHashTagsInput = imgUploadElement.querySelector('.text__hashtags');
 const imgDescriptionInput = imgUploadElement.querySelector('.text__description');
+const filterPreviews = imgUploadElement.querySelectorAll('span.effects__preview');
 
 const regExpPattern = /^#[a-zа-яё0-9]{1,19}$/i;
 
@@ -112,7 +113,11 @@ function updatePreviewPhoto () {
 
   const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
   if (matches) {
-    imgUploadPreview.src = URL.createObjectURL(file);
+    const imagePath = URL.createObjectURL(file);
+    imgUploadPreview.src = imagePath;
+    filterPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url(${imagePath})`;
+    });
   }
 }
 
@@ -124,6 +129,7 @@ function closeModal () {
   imgUploadOverlayCloseButton.removeEventListener('click', onImgUploadOverlayCloseButtonClick);
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  pristine.reset();
   resetScale();
   resetEffect();
 }
@@ -133,9 +139,9 @@ function onImgUploadOverlayCloseButtonClick () {
 }
 
 function onDocumentKeydown (evt) {
-  const isErrorElementHidden = document.querySelector('.error').classList.contains('hidden');
-  const isSuccessElementHidden = document.querySelector('.success').classList.contains('hidden');
-  if (evt.key === BUTTON_CLOSE_MODULE_WINDOW && isErrorElementHidden && isSuccessElementHidden) {
+  const sendDataErrorElement = document.querySelector('.error');
+  const sendDataSuccessElement = document.querySelector('.success');
+  if (evt.key === BUTTON_CLOSE_MODULE_WINDOW && !sendDataErrorElement && !sendDataSuccessElement) {
     evt.preventDefault();
     closeModal();
   }
